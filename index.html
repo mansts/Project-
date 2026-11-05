@@ -62,7 +62,7 @@
     }
     .snap-container::-webkit-scrollbar-thumb {
       background: #D5CCC0;
-      border-radius: 1000px;
+      border-radius: 500px;
     }
     .snap-container::-webkit-scrollbar-track {
       background: transparent;
@@ -415,64 +415,6 @@
       </div>
     </section>
 
-    <!-- ========== СЛАЙД 7: ЭКСПЕРИМЕНТ (ВЕС И МАССА МОЛЕКУЛ) + ФУТЕР ========== -->
-    <section class="snap-section px-6 sm:px-12 lg:px-20 py-8 bg-milk flex flex-col justify-between">
-      <div class="max-w-5xl mx-auto w-full my-auto space-y-5">
-        
-        <div class="border-b border-line pb-3 flex flex-wrap items-baseline justify-between gap-3">
-          <h2 id="t-scale-title" class="serif-text text-3xl sm:text-4xl text-ink font-normal">
-            Эксперимент: Вес и масса молекул
-          </h2>
-          <span class="mono-num text-xs text-dim">N<sub>A</sub> = 6.022 × 10²³</span>
-        </div>
-
-        <div class="flex flex-wrap gap-2">
-          <button onclick="pickGas('H2')" class="g-btn px-4 py-2 rounded-2xl border border-line bg-cream text-xs mono-num transition" data-id="H2">H₂</button>
-          <button onclick="pickGas('He')" class="g-btn px-4 py-2 rounded-2xl border border-line bg-cream text-xs mono-num transition" data-id="He">He</button>
-          <button onclick="pickGas('H2O')" class="g-btn px-4 py-2 rounded-2xl border border-line bg-cream text-xs mono-num transition" data-id="H2O">H₂O</button>
-          <button onclick="pickGas('N2')" class="g-btn px-4 py-2 rounded-2xl border border-line bg-cream text-xs mono-num transition" data-id="N2">N₂</button>
-          <button onclick="pickGas('O2')" class="g-btn px-4 py-2 rounded-2xl border border-ink bg-ink text-milk text-xs mono-num font-semibold transition" data-id="O2">O₂</button>
-          <button onclick="pickGas('CO2')" class="g-btn px-4 py-2 rounded-2xl border border-line bg-cream text-xs mono-num transition" data-id="CO2">CO₂</button>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <div class="p-6 rounded-3xl bg-cream border border-line flex flex-col justify-between shadow-sm space-y-4">
-            <div>
-              <div id="t-lbl-single" class="mono-num text-xs uppercase text-dim tracking-wider mb-1">
-                Масса молекулы (m₀ = M / N<sub>A</sub>)
-              </div>
-              <div id="boxSingleKg" class="mono-num text-3xl sm:text-4xl font-bold text-ink py-1">
-                5.31 × 10⁻²⁶ кг
-              </div>
-              <div id="boxSingleAmu" class="mono-num text-sm text-dim">
-                31.999 а.е.м.
-              </div>
-            </div>
-            <div class="pt-3 border-t border-line text-xs mono-num text-dim flex items-center justify-between" id="boxCalcLine">
-              <span>Расчет:</span>
-              <span>31.999 × 10⁻³ / 6.022 × 10²³</span>
-            </div>
-          </div>
-
-          <div class="p-6 rounded-3xl bg-cream border border-line flex flex-col justify-between shadow-sm space-y-4">
-            <div>
-              <div id="t-lbl-weight" class="mono-num text-xs uppercase text-dim tracking-wider mb-1">
-                Вес молекулы в покое (P = m₀·g)
-              </div>
-              <div id="boxWeightN" class="mono-num text-3xl sm:text-4xl font-bold text-ink py-1">
-                5.21 × 10⁻²⁵ Н
-              </div>
-              <div id="t-lbl-mole" class="mono-num text-sm text-dim">
-                Молярная масса: 31.999 г/моль
-              </div>
-            </div>
-            <p id="t-scale-desc" class="pt-3 border-t border-line text-xs text-ink/80 leading-relaxed">
-              Вес отдельной молекулы ничтожен: сила гравитации в триллионы раз слабее импульсов теплового соударения, поэтому газы не оседают на дно, а равномерно заполняют предоставленный объем.
-            </p>
-          </div>
-        </div>
-
-      </div>
 
       <!-- ==================== ФУТЕР ==================== -->
       <footer class="max-w-5xl mx-auto w-full pt-4 pb-2 border-t border-line">
@@ -486,10 +428,10 @@
             </div>
           </div>
           <ul class="flex flex-wrap gap-x-4 gap-y-1 text-xs mono-num text-ink">
-            <li>• Болатхан Мансур</li>
-            <li>• Участник2</li>
-            <li>• Участник3</li>
-            <li>• Участник4</li>
+            <li> Болатхан Мансур</li>
+            <li> Участник2</li>
+            <li> Участник3</li>
+            <li> Участник4</li>
           </ul>
         </div>
       </footer>
