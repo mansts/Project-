@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" class="h-full scroll-smooth">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,842 +7,526 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            milk: '#FAF8F5',
-            cream: '#F3EEE5',
-            paper: '#EBE4D6',
-            ink: '#171717',
-            dim: '#5E5A54',
-            line: '#DCD4C6'
-          },
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            serif: ['EB Garamond', 'serif'],
-            mono: ['JetBrains Mono', 'monospace'],
-          }
-        }
-      }
-    }
-  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@300;400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
   <style>
-    html, body {
-      background-color: #FAF8F5;
-      color: #171717;
-      overflow-x: hidden;
-      scroll-behavior: smooth;
+    /* СТРОГИЕ ПРЯМЫЕ УГЛЫ 90 ГРАДУСОВ ДЛЯ ВСЕХ ЭЛЕМЕНТОВ */
+    *, *::before, *::after {
+      border-radius: 0px !important;
     }
-    .snap-container {
-      height: 90vh;
-      overflow-y: auto;
+
+    :root {
+      --bg: #FDFBF7;
+      --border: #D8CEBE;
+      --ink: #171717;
+      --ink-muted: #6B6359;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--ink);
+      font-family: 'Inter', sans-serif;
+    }
+
+    .font-serif-heading {
+      font-family: 'Newsreader', serif;
+    }
+
+    /* Навигация слайдами по 90vh с мягким скроллом */
+    .slides-wrapper {
       scroll-snap-type: y proximity;
+      overflow-y: auto;
+      height: 100vh;
       scroll-behavior: smooth;
-      -webkit-overflow-scrolling: touch;
     }
-    .snap-section {
+
+    .slide-section {
       min-height: 90vh;
-      scroll-snap-align: start;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      position: relative;
+      scroll-snap-align: start;
+      border-bottom: 1px solid var(--border);
+      padding: 3rem 1.5rem;
     }
-    .serif-text {
-      font-family: 'EB Garamond', serif;
-    }
-    .mono-num {
-      font-family: 'JetBrains Mono', monospace;
-    }
-    .snap-container::-webkit-scrollbar {
-      width: 5px;
-    }
-    .snap-container::-webkit-scrollbar-thumb {
-      background: #D5CCC0;
-      border-radius: 500px;
-    }
-    .snap-container::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    /* Компактная физическая дробь без лишней высоты */
-    .frac {
+
+    /* Компактная математическая дробь */
+    .math-frac {
       display: inline-flex;
       flex-direction: column;
       vertical-align: middle;
       text-align: center;
-      padding: 0 0.25rem;
-      line-height: 1;
+      padding: 0 0.35rem;
+      line-height: 1.1;
     }
-    .frac-top {
-      border-bottom: 1.5px solid currentColor;
+    .math-num {
+      border-bottom: 2px solid var(--ink);
       padding-bottom: 2px;
+      font-weight: 600;
     }
-    .frac-bottom {
-      padding-top: 2px;
+    .math-den {
+      padding-top: 3px;
+      font-weight: 600;
+    }
+
+    /* Фотография БЕЗ ОКОНТОВКИ, чистые 90 градусов */
+    .photo-clean {
+      width: 100%;
+      height: 100%;
+      max-height: 380px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none !important;
+      outline: none !important;
+    }
+
+    .photo-clean img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
     }
   </style>
 </head>
-<body class="selection:bg-ink selection:text-milk font-sans">
+<body class="overflow-hidden">
 
-  <!-- ==================== ШАПКА ==================== -->
-  <header class="sticky top-0 z-50 bg-[#FAF8F5]/95 backdrop-blur-md border-b border-line">
-    <div class="max-w-6xl mx-auto px-6 sm:px-10 h-16 flex items-center justify-between">
-      <h1 id="headerTitle" class="serif-text text-xl sm:text-2xl font-medium tracking-tight text-ink">
-        Как нашли массу тел?
-      </h1>
-
-      <div class="inline-flex items-center border border-line rounded-full p-1 bg-cream text-xs mono-num shadow-sm">
-        <button onclick="setLang('kz')" id="btn-kz" class="px-3.5 py-1 rounded-full text-dim hover:text-ink transition-colors duration-200">KZ</button>
-        <button onclick="setLang('ru')" id="btn-ru" class="px-3.5 py-1 rounded-full bg-ink text-milk font-semibold transition-colors duration-200">RU</button>
-        <button onclick="setLang('en')" id="btn-en" class="px-3.5 py-1 rounded-full text-dim hover:text-ink transition-colors duration-200">EN</button>
-      </div>
+  <!-- ШАПКА: только заголовок и KZ | RU | EN -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-[#FDFBF7]/95 border-b border-[#D8CEBE] px-6 py-3 flex items-center justify-between backdrop-blur-sm">
+    <h1 id="header-title" class="font-serif-heading text-xl md:text-2xl font-semibold tracking-tight text-[#171717]">
+      Как нашли массу тел?
+    </h1>
+    <div class="flex items-center gap-1 border border-[#D8CEBE] p-1 bg-[#F5EFEB]">
+      <button onclick="setLang('kz')" id="btn-kz" class="px-2.5 py-1 text-xs font-medium uppercase tracking-wider text-[#6B6359] hover:text-[#171717]">KZ</button>
+      <span class="text-[#D8CEBE]">|</span>
+      <button onclick="setLang('ru')" id="btn-ru" class="px-2.5 py-1 text-xs font-semibold uppercase tracking-wider bg-[#171717] text-[#FDFBF7]">RU</button>
+      <span class="text-[#D8CEBE]">|</span>
+      <button onclick="setLang('en')" id="btn-en" class="px-2.5 py-1 text-xs font-medium uppercase tracking-wider text-[#6B6359] hover:text-[#171717]">EN</button>
     </div>
   </header>
 
-  <!-- ==================== КОНТЕЙНЕР ПРЕЗЕНТАЦИИ (90vh) ==================== -->
-  <main class="snap-container">
+  <main class="slides-wrapper pt-14">
 
-    <!-- ========== СЛАЙД 1: АВТОР ========== -->
-    <section class="snap-section px-6 sm:px-12 lg:px-20 py-8 bg-milk border-b border-line">
-      <div class="max-w-5xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-        
-        <div class="lg:col-span-7 space-y-5">
-          <h2 id="t-author-title" class="serif-text text-4xl sm:text-5xl text-ink font-normal leading-tight">
-            Автор
+    <!-- 01. АВТОР -->
+    <section class="slide-section">
+      <div class="max-w-6xl mx-auto w-full grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+        <div class="md:col-span-7 space-y-4">
+          <div class="text-xs tracking-widest uppercase font-semibold text-[#6B6359]">
+            01 • <span data-i18n="c1_badge">Критерий</span>
+          </div>
+          <h2 data-i18n="c1_title" class="font-serif-heading text-3xl md:text-5xl font-semibold text-[#171717] tracking-tight">
+            Автор: Амедео Авогадро и Жан Перрен
+          </h2>
+          <div class="space-y-4 text-sm md:text-base text-[#171717] leading-relaxed pt-2">
+            <p data-i18n="c1_p1">
+              <strong>Амедео Авогадро (1811 г.)</strong> — итальянский физик и химик, выдвинувший фундаментальную гипотезу: в равных объемах любых газов при одинаковых температуре и давлении содержится строго одинаковое число молекул.
+            </p>
+            <p data-i18n="c1_p2" class="text-[#6B6359] border-t border-[#D8CEBE] pt-3">
+              <strong>Жан Батист Перрен (1908 г.)</strong> — французский ученый, который экспериментально проверил закон на броуновских частицах и впервые вычислил точное число молекул в одном моле, получив Нобелевскую премию по физике (1926 г.).
+            </p>
+          </div>
+        </div>
+        <div class="md:col-span-5 h-[340px] flex items-center justify-center">
+          <div class="photo-clean">
+            <img src="IMG_676767" alt="IMG_676767" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'text-center p-6 text-[#8A8175] text-xs uppercase tracking-widest\'>IMG_676767</div>';">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02. СУТЬ ОПЫТА -->
+    <section class="slide-section">
+      <div class="max-w-6xl mx-auto w-full grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+        <div class="md:col-span-7 space-y-4">
+          <div class="text-xs tracking-widest uppercase font-semibold text-[#6B6359]">
+            02 • <span data-i18n="c2_badge">Критерий</span>
+          </div>
+          <h2 data-i18n="c2_title" class="font-serif-heading text-3xl md:text-5xl font-semibold text-[#171717] tracking-tight">
+            Суть опыта: седиментационное равновесие
+          </h2>
+          <div class="space-y-3 text-sm md:text-base text-[#171717] leading-relaxed pt-2">
+            <p data-i18n="c2_p1">
+              Перрен приготовил водную эмульсию смолы гуммигута с одинаковыми микросферами известного радиуса и массы. Раствор поместили в прозрачную кювету глубиной 100 мкм.
+            </p>
+            <div class="space-y-2 border-t border-[#D8CEBE] pt-3 text-xs md:text-sm text-[#6B6359]">
+              <p>— <strong>Оседание:</strong> Сила тяжести тянет частицы вниз, стремясь собрать их на дне.</p>
+              <p>— <strong>Тепловое рассеяние:</strong> Бесчисленные молекулы воды непрерывно ударяют частицы, подбрасывая их вверх.</p>
+              <p>— <strong>Микроскоп:</strong> Измерялась концентрация частиц на разных высотах при установившемся динамическом равновесии.</p>
+            </div>
+          </div>
+        </div>
+        <div class="md:col-span-5 h-[340px] flex items-center justify-center">
+          <div class="photo-clean">
+            <img src="IMG_676767" alt="IMG_676767" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'text-center p-6 text-[#8A8175] text-xs uppercase tracking-widest\'>IMG_676767</div>';">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03. РЕЗУЛЬТАТ (БЕЗ БЛОКОВ) -->
+    <section class="slide-section">
+      <div class="max-w-6xl mx-auto w-full grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+        <div class="md:col-span-7 space-y-5">
+          <div class="text-xs tracking-widest uppercase font-semibold text-[#6B6359]">
+            03 • <span data-i18n="c3_badge">Критерий</span>
+          </div>
+          <h2 data-i18n="c3_title" class="font-serif-heading text-3xl md:text-5xl font-semibold text-[#171717] tracking-tight">
+            Результат: экспериментальное число Авогадро
           </h2>
 
-          <div class="space-y-4 text-base sm:text-lg leading-relaxed text-ink/90">
-            <blockquote id="t-author-quote" class="serif-text italic text-xl sm:text-2xl text-dim border-l-2 border-ink pl-4 py-1">
-              «Равные объемы любых газов при одинаковых температуре и давлении содержат равное число молекул».
-            </blockquote>
-            <p id="t-author-p1">
-              Основоположником идеи стал итальянский ученый <strong>Амедео Авогадро</strong> (1811 г.). Почти столетие его гипотеза оставалась без экспериментального подтверждения, так как масса одиночной микрочастицы ничтожно мала для прямого взвешивания.
-            </p>
-            <p id="t-author-p2">
-              Решающий опыт поставил французский физик <strong>Жан Батист Перрен</strong> в 1908–1909 гг., опираясь на молекулярно-кинетическую теорию <strong>Альберта Эйнштейна</strong> и Мариана Смолуховского. Перрен экспериментально доказал реальность молекул и измерил число Авогадро, получив Нобелевскую премию по физике (1926 г.).
-            </p>
+          <div class="pt-2 border-b border-[#D8CEBE] pb-4">
+            <div class="text-xs uppercase tracking-widest text-[#6B6359]">Постоянная Авогадро из опыта:</div>
+            <div class="text-3xl md:text-4xl font-bold tracking-tight text-[#171717] mt-1">
+              N<sub>A</sub> ≈ 6,8 × 10<sup>23</sup> моль<sup>−1</sup>
+            </div>
+            <div class="text-xs text-[#6B6359] mt-1">Современное эталонное значение CODATA: 6,02214076 × 10<sup>23</sup> моль<sup>−1</sup></div>
           </div>
-        </div>
 
-        <div class="lg:col-span-5 flex justify-center">
-          <div class="w-full max-w-sm rounded-3xl p-3 bg-cream border border-line shadow-sm">
-            <div class="w-full min-h-[280px] sm:min-h-[340px] rounded-2xl overflow-hidden bg-milk border border-line flex items-center justify-center p-2">
-              <img 
-                src="IMG_676767" 
-                alt="Амедео Авогадро и Жан Перрен" 
-                class="w-auto h-auto max-w-full max-h-[320px] object-contain rounded-xl"
-                onerror="this.style.display='none'; document.getElementById('fb1').style.display='flex';"
-              >
-              <div id="fb1" class="w-full h-full min-h-[260px] flex flex-col justify-between items-center text-center p-6" style="display:none;">
-                <span class="mono-num text-xs text-dim">1811 — 1908</span>
-                <div class="serif-text italic text-2xl text-ink">Амедео Авогадро &amp; Жан Перрен</div>
-                <span class="mono-num text-xs text-dim bg-cream px-3 py-1 rounded-full border border-line">IMG_676767</span>
-              </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-1">
+            <div>
+              <span class="text-xs text-[#6B6359] uppercase tracking-wider block">Масса молекулы H₂:</span>
+              <span class="text-2xl font-bold text-[#171717]">3,3 × 10<sup>−27</sup> кг</span>
+            </div>
+            <div>
+              <span class="text-xs text-[#6B6359] uppercase tracking-wider block">Масса молекулы H₂O:</span>
+              <span class="text-2xl font-bold text-[#171717]">3,0 × 10<sup>−26</sup> кг</span>
             </div>
           </div>
         </div>
-
+        <div class="md:col-span-5 h-[340px] flex items-center justify-center">
+          <div class="photo-clean">
+            <img src="IMG_7350.jpeg" alt="IMG_7350.jpeg" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'text-center p-6 text-[#8A8175] text-xs uppercase tracking-widest\'>IMG_7350.jpeg</div>';">
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- ========== СЛАЙД 2: СУТЬ ОПЫТА ========== -->
-    <section class="snap-section px-6 sm:px-12 lg:px-20 py-8 bg-cream border-b border-line">
-      <div class="max-w-5xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-        
-        <div class="lg:col-span-7 space-y-4">
-          <h2 id="t-exp-title" class="serif-text text-4xl sm:text-5xl text-ink font-normal leading-tight">
-            Суть опыта
-          </h2>
-
-          <div class="space-y-3.5 text-base sm:text-lg leading-relaxed text-ink/90">
-            <p id="t-exp-p1">
-              Перрен применил метод <strong>седиментационного равновесия</strong>: исследовал микроэмульсию смолы гуммигута со строго калиброванными сферическими микрочастицами одинакового радиуса.
-            </p>
-            <p id="t-exp-p2">
-              Капля раствора помещалась в плоскую микрокювету толщиной около 0.1 мм. Под микроскопом с малой глубиной резкости ученый считал число взвешенных частиц на разных строго фиксированных уровнях высоты.
-            </p>
-            <p id="t-exp-p3">
-              В кювете возникло динамическое равновесие двух сил: гравитация осаждает шарики вниз, а тепловые удары окружающих молекул воды непрерывно подбрасывают их вверх. Распределение подчинялось барометрическому закону, связывая микромир со свойствами жидкости.
-            </p>
-          </div>
-        </div>
-
-        <div class="lg:col-span-5 flex justify-center">
-          <div class="w-full max-w-sm rounded-3xl p-3 bg-milk border border-line shadow-sm">
-            <div class="w-full min-h-[280px] sm:min-h-[340px] rounded-2xl overflow-hidden bg-cream border border-line flex items-center justify-center p-2">
-              <img 
-                src="IMG_676767" 
-                alt="Схема опыта Перрена" 
-                class="w-auto h-auto max-w-full max-h-[320px] object-contain rounded-xl"
-                onerror="this.style.display='none'; document.getElementById('fb2').style.display='flex';"
-              >
-              <div id="fb2" class="w-full h-full min-h-[260px] flex flex-col justify-between items-center text-center p-6" style="display:none;">
-                <span class="mono-num text-xs text-dim">Седиментация</span>
-                <div class="serif-text italic text-2xl text-ink">Равновесие в микрокювете</div>
-                <span class="mono-num text-xs text-dim bg-milk px-3 py-1 rounded-full border border-line">IMG_676767</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ========== СЛАЙД 3: РЕЗУЛЬТАТ (IMG_7350.jpeg) ========== -->
-    <section class="snap-section px-6 sm:px-12 lg:px-20 py-8 bg-milk border-b border-line">
-      <div class="max-w-5xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-        
-        <div class="lg:col-span-7 space-y-5">
-          <h2 id="t-res-title" class="serif-text text-4xl sm:text-5xl text-ink font-normal leading-tight">
-            Результат
-          </h2>
-
-          <div class="space-y-4 text-base sm:text-lg leading-relaxed text-ink/90">
-            <p id="t-res-p1">
-              Эксперимент подтвердил справедливость молекулярно-кинетической теории (МКТ) и определил число частиц в одном моле вещества:
-            </p>
-
-            <div class="p-4 bg-cream rounded-2xl border border-line flex items-center justify-between">
-              <span class="text-sm font-medium text-dim">Постоянная Авогадро:</span>
-              <span class="mono-num text-xl sm:text-2xl font-bold text-ink">N<sub>A</sub> = 6.022 × 10²³ моль⁻¹</span>
-            </div>
-
-            <p id="t-res-p2">
-              Благодаря точному значению постоянной физики рассчитали реальные массы отдельных молекул (меры их инертности) в килограммах:
-            </p>
-
-            <div class="grid grid-cols-3 gap-3 text-center mono-num text-xs sm:text-sm pt-1">
-              <div class="p-3 bg-cream rounded-2xl border border-line">
-                <div class="text-dim text-[11px] mb-1">Водород H₂</div>
-                <div class="font-bold text-ink">3.34 × 10⁻²⁷ кг</div>
-              </div>
-              <div class="p-3 bg-cream rounded-2xl border border-line">
-                <div class="text-dim text-[11px] mb-1">Вода H₂O</div>
-                <div class="font-bold text-ink">2.99 × 10⁻²⁶ кг</div>
-              </div>
-              <div class="p-3 bg-cream rounded-2xl border border-line">
-                <div class="text-dim text-[11px] mb-1">Кислород O₂</div>
-                <div class="font-bold text-ink">5.31 × 10⁻²⁶ кг</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="lg:col-span-5 flex justify-center">
-          <div class="w-full max-w-sm rounded-3xl p-3 bg-cream border border-line shadow-sm">
-            <div class="w-full min-h-[280px] sm:min-h-[340px] rounded-2xl overflow-hidden bg-milk border border-line flex items-center justify-center p-2">
-              <img 
-                src="IMG_7350.jpeg" 
-                alt="Результаты опыта Перрена" 
-                class="w-auto h-auto max-w-full max-h-[320px] object-contain rounded-xl"
-                onerror="this.style.display='none'; document.getElementById('fb3').style.display='flex';"
-              >
-              <div id="fb3" class="w-full h-full min-h-[260px] flex flex-col justify-between items-center text-center p-6" style="display:none;">
-                <span class="mono-num text-xs text-dim">1 а.е.м. ≈ 1.66 × 10⁻²⁷ кг</span>
-                <div class="serif-text italic text-2xl text-ink">Спектр масс молекул</div>
-                <span class="mono-num text-xs text-dim bg-cream px-3 py-1 rounded-full border border-line">IMG_7350.jpeg</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ========== СЛАЙД 4: ФОРМУЛА (БЕЗ ФОТО И ЛИШНЕГО ТЕКСТА) ========== -->
-    <section class="snap-section px-6 sm:px-12 lg:px-20 py-8 bg-cream border-b border-line">
-      <div class="max-w-4xl mx-auto w-full space-y-6 text-center sm:text-left">
-        
-        <h2 id="t-form-title" class="serif-text text-4xl sm:text-5xl text-ink font-normal leading-tight">
-          Формула
-        </h2>
-
-        <div class="p-6 sm:p-8 bg-milk rounded-3xl border border-line shadow-sm space-y-4">
-          <p id="t-form-intro" class="text-base sm:text-lg text-ink/90">
-            Основная формула 10 класса для нахождения абсолютной массы одной молекулы выражается отношением молярной массы вещества к постоянной Авогадро:
-          </p>
-
-          <div class="py-5 text-center flex items-center justify-center">
-            <div class="inline-flex items-center text-3xl sm:text-4xl md:text-5xl font-semibold mono-num text-ink">
-              <span>m₀ = </span>
-              <span class="frac text-2xl sm:text-3xl md:text-4xl ml-2">
-                <span class="frac-top">M</span>
-                <span class="frac-bottom">N<sub>A</sub></span>
-              </span>
-            </div>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 text-xs sm:text-sm mono-num">
-            <div class="p-3 bg-cream rounded-2xl border border-line text-left">
-              <strong class="text-ink">m₀</strong> — масса одной молекулы [кг]
-            </div>
-            <div class="p-3 bg-cream rounded-2xl border border-line text-left">
-              <strong class="text-ink">M</strong> — молярная масса [кг/моль]
-            </div>
-            <div class="p-3 bg-cream rounded-2xl border border-line text-left">
-              <strong class="text-ink">N<sub>A</sub></strong> — число Авогадро [моль⁻¹]
-            </div>
-          </div>
-        </div>
-
-        <p id="t-form-alt" class="text-sm sm:text-base text-dim leading-relaxed">
-          Связанное выражение через общую массу образца: <span class="mono-num text-ink font-medium">m₀ = <span class="frac text-sm"><span class="frac-top">m</span><span class="frac-bottom">N</span></span></span>, где <span class="mono-num text-ink">m</span> — масса всего газа, а <span class="mono-num text-ink">N</span> — полное число молекул в данном объеме.
-        </p>
-
-      </div>
-    </section>
-
-    <!-- ========== СЛАЙД 5: В ЧЕМ ЛОГИКА (БЕЗ ФОТО) ========== -->
-    <section class="snap-section px-6 sm:px-12 lg:px-20 py-8 bg-milk border-b border-line">
+    <!-- 04. ФОРМУЛА (БЕЗ БОЛЬШОГО БЛОКА, ПРЯМЫЕ УГЛЫ) -->
+    <section class="slide-section">
       <div class="max-w-4xl mx-auto w-full space-y-6">
-        
-        <h2 id="t-logic-title" class="serif-text text-4xl sm:text-5xl text-ink font-normal leading-tight">
-          В чем логика
+        <div class="text-xs tracking-widest uppercase font-semibold text-[#6B6359]">
+          04 • <span data-i18n="c4_badge">Критерий</span>
+        </div>
+        <h2 data-i18n="c4_title" class="font-serif-heading text-3xl md:text-5xl font-semibold text-[#171717] tracking-tight">
+          Формула: масса одной молекулы
         </h2>
 
-        <div class="space-y-4 text-base sm:text-lg leading-relaxed text-ink/90">
-          <p id="t-logic-p1">
-            Одиночную молекулу невозможно взвесить на обычных весах. Причина в колоссальной разнице масштабов: сила тяжести молекулы ничтожно мала (<span class="mono-num">~10⁻²⁵ Н</span>), и ее полностью перекрывает тепловое хаотическое движение (<span class="mono-num">kT</span>).
-          </p>
-
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
-            <div class="p-5 bg-cream rounded-3xl border border-line flex flex-col justify-between space-y-3">
-              <span class="mono-num text-xs text-dim uppercase tracking-wider">Шаг 1 • Макромир</span>
-              <p id="t-step-1" class="text-sm leading-relaxed text-ink">
-                Химики и физики легко взвешивают 1 моль вещества на макровесах: например, ровно 32 грамма для кислорода O₂.
-              </p>
-            </div>
-
-            <div class="p-5 bg-cream rounded-3xl border border-line flex flex-col justify-between space-y-3">
-              <span class="mono-num text-xs text-dim uppercase tracking-wider">Шаг 2 • Мост</span>
-              <p id="t-step-2" class="text-sm leading-relaxed text-ink">
-                Опыт Перрена дал точный счетчик: в одном моле любого вещества строго <span class="mono-num font-semibold text-ink">6.022 × 10²³</span> молекул.
-              </p>
-            </div>
-
-            <div class="p-5 bg-cream rounded-3xl border border-line flex flex-col justify-between space-y-3">
-              <span class="mono-num text-xs text-dim uppercase tracking-wider">Шаг 3 • Микромир</span>
-              <p id="t-step-3" class="text-sm leading-relaxed text-ink">
-                Разделив известную массу моля на число частиц в нем, ученые вычислили истинную массу одной невидимой частицы.
-              </p>
-            </div>
-          </div>
-
-          <p id="t-logic-p2" class="text-sm text-dim leading-relaxed pt-2">
-            Таким образом, число Авогадро N<sub>A</sub> послужило универсальным переводным коэффициентом между макроскопическими приборами в лаборатории и микроскопическим миром молекул.
-          </p>
+        <!-- Компактная формула без огромной коробки -->
+        <div class="py-6 border-y border-[#D8CEBE] flex items-center justify-center gap-4 text-4xl md:text-6xl font-serif-heading text-[#171717]">
+          <span>m<sub>0</sub></span>
+          <span>=</span>
+          <span class="math-frac">
+            <span class="math-num">M</span>
+            <span class="math-den">N<sub>A</sub></span>
+          </span>
         </div>
 
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+          <div class="border-t border-[#D8CEBE] pt-3">
+            <div class="font-bold text-[#171717] text-base">m<sub>0</sub> [кг]</div>
+            <div data-i18n="c4_v1" class="text-xs text-[#6B6359] mt-1 leading-relaxed">
+              Абсолютная масса одной молекулы вещества — истинная мера её инертности.
+            </div>
+          </div>
+          <div class="border-t border-[#D8CEBE] pt-3">
+            <div class="font-bold text-[#171717] text-base">M [кг/моль]</div>
+            <div data-i18n="c4_v2" class="text-xs text-[#6B6359] mt-1 leading-relaxed">
+              Молярная масса — масса порции вещества в количестве 1 моль (из таблицы Менделеева).
+            </div>
+          </div>
+          <div class="border-t border-[#D8CEBE] pt-3">
+            <div class="font-bold text-[#171717] text-base">N<sub>A</sub> [моль<sup>−1</sup>]</div>
+            <div data-i18n="c4_v3" class="text-xs text-[#6B6359] mt-1 leading-relaxed">
+              Постоянная Авогадро — связующее звено между макроскопическим молем и отдельными частицами.
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- ========== СЛАЙД 6: ЭКСПЕРИМЕНТ (ДАВЛЕНИЕ И ТЕМПЕРАТУРА) ========== -->
-    <section class="snap-section px-6 sm:px-12 lg:px-20 py-8 bg-cream border-b border-line">
-      <div class="max-w-5xl mx-auto w-full space-y-4">
-        
-        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-3">
-          <h2 id="t-sim1-title" class="serif-text text-3xl sm:text-4xl text-ink font-normal">
-            Эксперимент: Давление и температура
-          </h2>
-          <div class="flex items-center gap-2">
-            <select id="gasSelect" class="bg-milk border border-line rounded-2xl px-3 py-1.5 text-xs mono-num text-ink focus:outline-none">
-              <option value="H2">H₂ (Водород)</option>
-              <option value="He">He (Гелий)</option>
-              <option value="N2" selected>N₂ (Азот)</option>
-              <option value="O2">O₂ (Кислород)</option>
-              <option value="CO2">CO₂ (Углекислый газ)</option>
-            </select>
-            <button id="btnToggleSim" class="px-4 py-1.5 bg-ink text-milk rounded-2xl text-xs mono-num font-medium hover:bg-neutral-800 transition">
-              Пауза
-            </button>
+    <!-- 05. В ЧЕМ ЛОГИКА (БЕЗ БЛОКОВ — ЧИСТАЯ ТИПОГРАФИКА) -->
+    <section class="slide-section">
+      <div class="max-w-4xl mx-auto w-full space-y-6">
+        <div class="text-xs tracking-widest uppercase font-semibold text-[#6B6359]">
+          05 • <span data-i18n="c5_badge">Критерий</span>
+        </div>
+        <h2 data-i18n="c5_title" class="font-serif-heading text-3xl md:text-5xl font-semibold text-[#171717] tracking-tight">
+          В чем логика: как взвесить то, что нельзя положить на весы?
+        </h2>
+
+        <div class="space-y-6 pt-2 text-[#171717]">
+          <div class="border-l-2 border-[#171717] pl-4 space-y-1">
+            <span class="text-xs font-bold uppercase tracking-widest text-[#6B6359]">1. Измерение макромира</span>
+            <p class="text-sm md:text-base leading-relaxed">
+              Положить одну молекулу на весы невозможно из-за её ничтожной массы ($10^{-26}$ кг). Но на обычных весах легко взвесить 1 моль вещества — например, ровно 18 граммов (0,018 кг) воды.
+            </p>
           </div>
+
+          <div class="border-l-2 border-[#171717] pl-4 space-y-1">
+            <span class="text-xs font-bold uppercase tracking-widest text-[#6B6359]">2. Определение числа частиц</span>
+            <p class="text-sm md:text-base leading-relaxed">
+              Опыт Перрена дал независимый способ точно сосчитать, сколько именно частиц содержится в этом макроскопическом объеме ($N_A \approx 6 \times 10^{23}$ штук).
+            </p>
+          </div>
+
+          <div class="border-l-2 border-[#171717] pl-4 space-y-1">
+            <span class="text-xs font-bold uppercase tracking-widest text-[#6B6359]">3. Точный расчет массы</span>
+            <p class="text-sm md:text-base leading-relaxed">
+              Разделив общую массу известной порции на точное число молекул в ней, получают массу одной молекулы: $m_0 = \frac{M}{N_A}$.
+            </p>
+          </div>
+
+          <p class="text-xs md:text-sm text-[#6B6359] border-t border-[#D8CEBE] pt-4">
+            <strong>Итог:</strong> Человечеству не понадобились сверхчувствительные весы для одной молекулы. Связующим мостом между макроскопическим килограммом и микромиром стало число Авогадро.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ЭКСПЕРИМЕНТ: ДАВЛЕНИЕ И ТЕМПЕРАТУРА (БЕЗ БЛОКА ПАРАМЕТРОВ МКТ) -->
+    <section class="slide-section">
+      <div class="max-w-6xl mx-auto w-full space-y-4">
+        <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-[#D8CEBE] pb-3 gap-2">
+          <div>
+            <span class="text-xs uppercase tracking-widest text-[#6B6359] font-semibold">Эксперимент</span>
+            <h2 data-i18n="sim1_title" class="font-serif-heading text-2xl md:text-4xl font-semibold text-[#171717]">
+              Давление, температура и закон Авогадро
+            </h2>
+          </div>
+          <div class="text-xs text-[#6B6359] font-mono">P = nkT = (N / V) · kT</div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
-          <div class="lg:col-span-8 bg-milk rounded-3xl border border-line p-4 flex flex-col justify-between shadow-sm">
-            <div class="relative w-full h-56 sm:h-64 rounded-2xl overflow-hidden bg-[#FAF8F5]">
-              <canvas id="gasCanvas" class="w-full h-full block"></canvas>
-              <div class="absolute bottom-3 left-3 bg-milk/95 px-3 py-1 rounded-full border border-line text-xs mono-num shadow-sm">
-                P = <span id="valPressure">1.00</span> атм
-              </div>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-3 border-t border-line mt-3">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start pt-2">
+          <!-- Холст симуляции -->
+          <div class="md:col-span-8 space-y-3">
+            <canvas id="gasCanvas" class="w-full h-[320px] bg-[#171717] block"></canvas>
+            
+            <div class="grid grid-cols-3 gap-4 border-t border-[#D8CEBE] pt-3 text-center">
               <div>
-                <div class="flex justify-between text-xs mb-1">
-                  <span id="t-lbl-temp" class="text-dim">Температура:</span>
-                  <span id="dispTemp" class="mono-num font-semibold">293 K</span>
-                </div>
-                <input id="sliderT" type="range" min="100" max="600" value="293" class="w-full h-1.5 bg-paper rounded-full appearance-none cursor-pointer accent-ink">
+                <span class="text-xs text-[#6B6359] block">Давление (P):</span>
+                <span id="readout-p" class="text-lg font-bold text-[#171717]">101.3 кПа</span>
               </div>
               <div>
-                <div class="flex justify-between text-xs mb-1">
-                  <span id="t-lbl-vol" class="text-dim">Объем камеры (V):</span>
-                  <span id="dispVol" class="mono-num font-semibold">1.00 V₀</span>
-                </div>
-                <input id="sliderV" type="range" min="0.45" max="1.0" step="0.01" value="1.0" class="w-full h-1.5 bg-paper rounded-full appearance-none cursor-pointer accent-ink">
+                <span class="text-xs text-[#6B6359] block">Число частиц (N):</span>
+                <span id="readout-n" class="text-lg font-bold text-[#171717]">120</span>
+              </div>
+              <div>
+                <span class="text-xs text-[#6B6359] block">Ср. скорость:</span>
+                <span id="readout-v" class="text-lg font-bold text-[#171717]">480 м/с</span>
               </div>
             </div>
           </div>
 
-          <div class="lg:col-span-4 bg-milk rounded-3xl border border-line p-5 flex flex-col justify-between shadow-sm space-y-4">
-            <div class="space-y-3.5">
-              <div id="t-sim-heading" class="mono-num text-xs uppercase tracking-wider text-dim border-b border-line pb-2">
-                Параметры МКТ
-              </div>
-              <div>
-                <div id="t-lbl-speed" class="text-xs text-dim">Средняя скорость молекул:</div>
-                <div id="valSpeed" class="mono-num text-2xl font-bold text-ink mt-0.5">510 м/с</div>
-              </div>
-              <div>
-                <div id="t-lbl-energy" class="text-xs text-dim">Кинетическая энергия (E<sub>k</sub>):</div>
-                <div id="valEnergy" class="mono-num text-base font-medium text-ink mt-0.5">6.07 × 10⁻²¹ Дж</div>
-              </div>
-              <div>
-                <div id="t-lbl-hits" class="text-xs text-dim">Интенсивность соударений:</div>
-                <div id="valHits" class="mono-num text-sm font-medium text-ink mt-0.5">100% нормы</div>
-              </div>
+          <!-- Настройки БЕЗ отдельного блока-коробки -->
+          <div class="md:col-span-4 space-y-5">
+            <div>
+              <label class="text-xs font-semibold uppercase tracking-wider text-[#6B6359] block mb-1">
+                Температура (T): <span id="label-t" class="text-[#171717] font-bold">300 К</span>
+              </label>
+              <input type="range" id="slider-t" min="100" max="600" value="300" class="w-full accent-[#171717]">
             </div>
-            <p id="t-sim-note" class="text-xs text-dim border-t border-line pt-3 leading-relaxed">
-              Давление газа возникает от непрерывных соударений миллиардов молекул о стенки сосуда. Рост температуры увеличивает скорость молекул и силу их импульсов.
+
+            <div>
+              <label class="text-xs font-semibold uppercase tracking-wider text-[#6B6359] block mb-1">
+                Объем камеры (V): <span id="label-v" class="text-[#171717] font-bold">1.0 л</span>
+              </label>
+              <input type="range" id="slider-v" min="50" max="100" value="100" class="w-full accent-[#171717]">
+            </div>
+
+            <div>
+              <label class="text-xs font-semibold uppercase tracking-wider text-[#6B6359] block mb-1">
+                Газ:
+              </label>
+              <select id="gas-select" class="w-full border border-[#D8CEBE] bg-[#FDFBF7] p-2 text-xs font-medium text-[#171717]">
+                <option value="H2">Водород (H₂, M = 2 г/моль)</option>
+                <option value="He">Гелий (He, M = 4 г/моль)</option>
+                <option value="N2" selected>Азот (N₂, M = 28 г/моль)</option>
+                <option value="O2">Кислород (O₂, M = 32 г/моль)</option>
+                <option value="CO2">Углекислый газ (CO₂, M = 44 г/моль)</option>
+              </select>
+            </div>
+
+            <p class="text-xs text-[#6B6359] leading-relaxed border-t border-[#D8CEBE] pt-3">
+              При одинаковых V, P и T число молекул строго одинаково вне зависимости от типа газа. Скорость же зависит от массы: легкий водород движется быстрее тяжелого углекислого газа.
             </p>
           </div>
         </div>
 
-      </div>
-    </section>
-
-
-      <!-- ==================== ФУТЕР ==================== -->
-      <footer class="max-w-5xl mx-auto w-full pt-4 pb-2 border-t border-line">
-        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-          <div>
-            <div id="footerText1" class="text-xs sm:text-sm font-medium text-ink">
+        <!-- ФУТЕР ВНИЗУ ПОСЛЕДНЕГО ЭКРАНА -->
+        <footer class="border-t border-[#D8CEBE] pt-6 mt-8">
+          <div class="text-center space-y-1">
+            <p data-i18n="footer_title" class="text-xs font-semibold text-[#171717] uppercase tracking-wider">
               Интерактивный сайт по проекту Группы №4 по физике.
-            </div>
-            <div id="footerText2" class="mono-num text-[11px] text-dim uppercase tracking-wider mt-0.5">
-              Участники проекта:
-            </div>
+            </p>
+            <p data-i18n="footer_members" class="text-xs text-[#6B6359]">
+              Участники проекта: Болатхан Мансур, Участник2, Участник3, Участник4
+            </p>
           </div>
-          <ul class="flex flex-wrap gap-x-4 gap-y-1 text-xs mono-num text-ink">
-            <li> Болатхан Мансур</li>
-            <li> Участник2</li>
-            <li> Участник3</li>
-            <li> Участник4</li>
-          </ul>
-        </div>
-      </footer>
+        </footer>
+      </div>
     </section>
 
   </main>
 
-  <!-- ==================== СКРИПТ: ПЕРЕКЛЮЧЕНИЕ ЯЗЫКОВ И СИМУЛЯЦИЯ ==================== -->
   <script>
-    const I18N = {
+    const i18n = {
       ru: {
-        headerTitle: "Как нашли массу тел?",
-        tAuthorTitle: "Автор",
-        tAuthorQuote: "«Равные объемы любых газов при одинаковых температуре и давлении содержат равное число молекул».",
-        tAuthorP1: "Основоположником идеи стал итальянский ученый <strong>Амедео Авогадро</strong> (1811 г.). Почти столетие его гипотеза оставалась без экспериментального подтверждения, так как масса одиночной микрочастицы ничтожно мала для прямого взвешивания.",
-        tAuthorP2: "Решающий опыт поставил французский физик <strong>Жан Батист Перрен</strong> в 1908–1909 гг., опираясь на молекулярно-кинетическую теорию <strong>Альберта Эйнштейна</strong> и Мариана Смолуховского. Перрен экспериментально доказал реальность молекул и измерил число Авогадро, получив Нобелевскую премию по физике (1926 г.).",
-
-        tExpTitle: "Суть опыта",
-        tExpP1: "Перрен применил метод <strong>седиментационного равновесия</strong>: исследовал микроэмульсию смолы гуммигута со строго калиброванными сферическими микрочастицами одинакового радиуса.",
-        tExpP2: "Капля раствора помещалась в плоскую микрокювету толщиной около 0.1 мм. Под микроскопом с малой глубиной резкости ученый считал число взвешенных частиц на разных строго фиксированных уровнях высоты.",
-        tExpP3: "В кювете возникло динамическое равновесие двух сил: гравитация осаждает шарики вниз, а тепловые удары окружающих молекул воды непрерывно подбрасывают их вверх. Распределение подчинялось барометрическому закону, связывая микромир со свойствами жидкости.",
-
-        tResTitle: "Результат",
-        tResP1: "Эксперимент подтвердил справедливость молекулярно-кинетической теории (МКТ) и определил число частиц в одном моле вещества:",
-        tResP2: "Благодаря точному значению постоянной физики рассчитали реальные массы отдельных молекул (меры их инертности) в килограммах:",
-
-        tFormTitle: "Формула",
-        tFormIntro: "Основная формула 10 класса для нахождения абсолютной массы одной молекулы выражается отношением молярной массы вещества к постоянной Авогадро:",
-        tFormAlt: "Связанное выражение через общую массу образца: m₀ = m / N, где m — масса всего газа, а N — полное число молекул в данном объеме.",
-
-        tLogicTitle: "В чем логика",
-        tLogicP1: "Одиночную молекулу невозможно взвесить на обычных весах. Причина в колоссальной разнице масштабов: сила тяжести молекулы ничтожно мала (~10⁻²⁵ Н), и ее полностью перекрывает тепловое хаотическое движение (kT).",
-        tStep1: "Химики и физики легко взвешивают 1 моль вещества на макровесах: например, ровно 32 грамма для кислорода O₂.",
-        tStep2: "Опыт Перрена дал точный счетчик: в одном моле любого вещества строго 6.022 × 10²³ молекул.",
-        tStep3: "Разделив известную массу моля на число частиц в нем, ученые вычислили истинную массу одной невидимой частицы.",
-        tLogicP2: "Таким образом, число Авогадро N<sub>A</sub> послужило универсальным переводным коэффициентом между макроскопическими приборами в лаборатории и микроскопическим миром молекул.",
-
-        tSim1Title: "Эксперимент: Давление и температура",
-        tLblTemp: "Температура:",
-        tLblVol: "Объем камеры (V):",
-        tSimHeading: "Параметры МКТ",
-        tLblSpeed: "Средняя скорость молекул:",
-        tLblEnergy: "Кинетическая энергия (E<sub>k</sub>):",
-        tLblHits: "Интенсивность соударений:",
-        tSimNote: "Давление газа возникает от непрерывных соударений миллиардов молекул о стенки сосуда. Рост температуры увеличивает скорость молекул и силу их импульсов.",
-        btnPause: "Пауза",
-        btnPlay: "Пуск",
-
-        tScaleTitle: "Эксперимент: Вес и масса молекул",
-        tLblSingle: "Масса молекулы (m₀ = M / N<sub>A</sub>)",
-        tLblWeight: "Вес молекулы в покое (P = m₀·g)",
-        tScaleDesc: "Вес отдельной молекулы ничтожен: сила гравитации в триллионы раз слабее импульсов теплового соударения, поэтому газы не оседают на дно, а равномерно заполняют предоставленный объем.",
-
-        footerText1: "Интерактивный сайт по проекту Группы №4 по физике.",
-        footerText2: "Участники проекта:"
+        header: "Как нашли массу тел?",
+        c1_badge: "Критерий",
+        c1_title: "Автор: Амедео Авогадро и Жан Перрен",
+        c1_p1: "<strong>Амедео Авогадро (1811 г.)</strong> — итальянский физик и химик, выдвинувший фундаментальную гипотезу: в равных объемах любых газов при одинаковых температуре и давлении содержится строго одинаковое число молекул.",
+        c1_p2: "<strong>Жан Батист Перрен (1908 г.)</strong> — французский ученый, который экспериментально проверил закон на броуновских частицах и впервые вычислил точное число молекул в одном моле, получив Нобелевскую премию по физике (1926 г.).",
+        c2_badge: "Критерий",
+        c2_title: "Суть опыта: седиментационное равновесие",
+        c2_p1: "Перрен приготовил водную эмульсию смолы гуммигута с одинаковыми микросферами известного радиуса и массы. Раствор поместили в прозрачную кювету глубиной 100 мкм.",
+        c3_badge: "Критерий",
+        c3_title: "Результат: экспериментальное число Авогадро",
+        c4_badge: "Критерий",
+        c4_title: "Формула: масса одной молекулы",
+        c4_v1: "Абсолютная масса одной молекулы вещества — истинная мера её инертности.",
+        c4_v2: "Молярная масса — масса порции вещества в количестве 1 моль (из таблицы Менделеева).",
+        c4_v3: "Постоянная Авогадро — связующее звено между макроскопическим молем и отдельными частицами.",
+        c5_badge: "Критерий",
+        c5_title: "В чем логика: как взвесить то, что нельзя положить на весы?",
+        sim1_title: "Давление, температура и закон Авогадро",
+        footer_title: "Интерактивный сайт по проекту Группы №4 по физике.",
+        footer_members: "Участники проекта: Болатхан Мансур, Участник2, Участник3, Участник4"
       },
       kz: {
-        headerTitle: "Денелердің массасын қалай тапты?",
-        tAuthorTitle: "Авторы",
-        tAuthorQuote: "«Бірдей температура мен қысымда кез келген газдардың тең көлемдерінде молекулалар саны бірдей болады».",
-        tAuthorP1: "Бұл заңның негізін итальяндық ғалым <strong>Амедео Авогадро</strong> (1811 ж.) қалады. Жүз жылдай уақыт бойы бұл болжам дәлелденбеді, себебі жеке микроскопиялық бөлшекті кәдімгі таразыға тартып өлшеу мүмкін емес еді.",
-        tAuthorP2: "Шешуші тәжірибені 1908–1909 жылдары француз физигі <strong>Жан Батист Перрен</strong> жасады. <strong>Альберт Эйнштейн</strong> мен Смолуховскийдің теориясына сүйене отырып, Перрен молекулалардың нақты барын дәлелдеді және Авогадро санын анықтап, Нобель сыйлығын алды (1926 ж.).",
-
-        tExpTitle: "Тәжірибенің мәні",
-        tExpP1: "Перрен <strong>седиментациялық тепе-теңдік</strong> әдісін қолданды: гуммигут шайырынан өлшемі бірдей радиусы қатаң тең микросфераларды бөліп алды.",
-        tExpP2: "Ерітіндінің тамшысы қалыңдығы 0.1 мм кюветаға орналастырылды. Шағын анықтық тереңдігі бар микроскоп арқылы ғалым әрбір қабаттағы бөлшектер санын биіктік деңгейі бойынша санап шықты.",
-        tExpP3: "Кюветада екі күштің динамикалық тепе-теңдігі орнады: ауырлық күші бөлшектерді түбіне тартса, су молекулаларының жылулық соққылары оларды қайта жоғары таратты. Бұл құбылыс барометрлік заңға бағынды.",
-
-        tResTitle: "Нәтижесі",
-        tResP1: "Тәжірибе молекулалық-кинетикалық теорияның дұрыстығын дәлелдеді және заттың бір моліндегі бөлшектер санын тапты:",
-        tResP2: "Осы тұрақты шаманың арқасында физиктер жеке молекулалардың килограмдағы нақты инерттілік массасын есептеп шығарды:",
-
-        tFormTitle: "Формуласы",
-        tFormIntro: "10-сынып физикасында жеке молекуланың абсолютті массасын табудың негізгі формуласы молярлық массаның Авогадро тұрақтысына қатынасы ретінде жазылады:",
-        tFormAlt: "Газ массасы арқылы байланысы: m₀ = m / N, мұндағы m — газдың жалпы массасы, ал N — осы көлемдегі барлық молекулалар саны.",
-
-        tLogicTitle: "Логикасы неде",
-        tLogicP1: "Жеке молекуланы кәдімгі таразыға қою мүмкін емес. Оның себебі ауқымдар айырмашылығында: молекуланың салмағы тым аз (~10⁻²⁵ Н) және оны бейберекет жылулық қозғалыс толықтай басып тастайды.",
-        tStep1: "Химиктер мен физиктер заттың 1 молін зертханалық таразымен оңай өлшей алады (мысалы, оттегі үшін 32 грамм).",
-        tStep2: "Перрен тәжірибесі нақты көрсеткіш берді: кез келген заттың бір молінде қатаң түрде 6.022 × 10²³ молекула болады.",
-        tStep3: "Мольдің белгілі салмағын бөлшектер санына бөлу арқылы көрінбейтін бір ғана молекуланың шынайы салмағы есептелді.",
-        tLogicP2: "Осылайша Авогадро саны N<sub>A</sub> зертханалық макроқұралдар мен молекулалардың микроәлемі арасында әмбебап байланыстырушы көпір болды.",
-
-        tSim1Title: "Тәжірибе: Қысым мен температура",
-        tLblTemp: "Температура:",
-        tLblVol: "Камера көлемі (V):",
-        tSimHeading: "МКТ параметрлері",
-        tLblSpeed: "Молекулалардың орташа жылдамдығы:",
-        tLblEnergy: "Кинетикалық энергия (E<sub>k</sub>):",
-        tLblHits: "Соқтығысу қарқындылығы:",
-        tSimNote: "Газ қысымы молекулалардың ыдыс қабырғасына үздіксіз соғылуынан пайда болады. Температура өскенде молекула жылдамдығы мен импульсі артады.",
-        btnPause: "Кідірту",
-        btnPlay: "Қосу",
-
-        tScaleTitle: "Тәжірибе: Салмақ пен молекулалар массасы",
-        tLblSingle: "Молекула массасы (m₀ = M / N<sub>A</sub>)",
-        tLblWeight: "Тыныштықтағы молекула салмағы (P = m₀·g)",
-        tScaleDesc: "Жеке молекуланың салмағы аса аз: тартылыс күші жылулық соқтығысу импульстерінен триллион есе әлсіз, сондықтан газ түбіне шөкпей бүкіл көлемге таралады.",
-
-        footerText1: "Физика пәні бойынша №4 топ жобасының интерактивті сайты.",
-        footerText2: "Жоба қатысушылары:"
+        header: "Денелердің массасын қалай тапты?",
+        c1_badge: "Критерий",
+        c1_title: "Авторы: Амедео Авогадро және Жан Перрен",
+        c1_p1: "<strong>Амедео Авогадро (1811 ж.)</strong> — қысым мен температурасы бірдей кез келген газдардың бірдей көлемінде молекулалар саны бірдей болатыны туралы гипотезаны ұсынды.",
+        c1_p2: "<strong>Жан Батист Перрен (1908 ж.)</strong> — броундық қозғалыс арқылы Авогадро санын тәжірибе жүзінде алғаш рет дәл анықтаған француз физигі (1926 ж. Нобель сыйлығы).",
+        c2_badge: "Критерий",
+        c2_title: "Тәжірибенің мәні: седиментациялық тепе-теңдік",
+        c2_p1: "Перрен радиусы мен тығыздығы бірдей гуммигут микросфераларынан жасалған эмульсияны 100 мкм шыны кюветаға құйып, молекулалық қозғалыс пен ауырлық күші арасындағы тепе-теңдікті микроскоппен қабат-қабат зерттеді.",
+        c3_badge: "Критерий",
+        c3_title: "Нәтиже: тәжірибелік Авогадро саны",
+        c4_badge: "Критерий",
+        c4_title: "Формула: бір молекуланың массасы",
+        c4_v1: "Бір молекуланың массасы — оның инерттілігінің нақты өлшемі.",
+        c4_v2: "Молярлық масса — 1 моль заттың массасы (Менделеев кестесінен алынады).",
+        c4_v3: "Авогадро тұрақтысы — макроскопиялық мольді микроәлемдегі бөлшектер санымен байланыстырады.",
+        c5_badge: "Критерий",
+        c5_title: "Логикасы неде: таразыға сыймайтынды қалай өлшеді?",
+        sim1_title: "Қысым, температура және Авогадро заңы",
+        footer_title: "Физика бойынша №4 топ жобасының интерактивті сайты.",
+        footer_members: "Жоба қатысушылары: Болатхан Мансур, Қатысушы2, Қатысушы3, Қатысушы4"
       },
       en: {
-        headerTitle: "How Was the Mass of Bodies Found?",
-        tAuthorTitle: "Author",
-        tAuthorQuote: "«Equal volumes of all gases, at the same temperature and pressure, contain an equal number of molecules».",
-        tAuthorP1: "The foundational principle was proposed by Italian scientist <strong>Amedeo Avogadro</strong> (1811). For almost a century, this hypothesis lacked direct experimental proof, since the mass of an isolated microscopic molecule is too minuscule for direct weighing.",
-        tAuthorP2: "The definitive experiment was conducted by French physicist <strong>Jean Baptiste Perrin</strong> in 1908–1909, based on the kinetic theory by <strong>Albert Einstein</strong> and Marian Smoluchowski. Perrin experimentally verified molecules and determined Avogadro's constant, earning the 1926 Nobel Prize in Physics.",
-
-        tExpTitle: "Essence of the Experiment",
-        tExpP1: "Perrin utilized the principle of <strong>sedimentation equilibrium</strong>: studying a gamboge emulsion consisting of precisely calibrated spherical granules with uniform radii.",
-        tExpP2: "A droplet was placed in a shallow glass micro-cell with a depth of 0.1 mm. Using a microscope with a shallow focal plane, Perrin counted the concentration of suspended particles across precisely fixed vertical layers.",
-        tExpP3: "A dynamic equilibrium arose between two forces: gravity pulled the spheres downward, while erratic thermal collisions from surrounding water molecules scattered them upward according to the barometric formula.",
-
-        tResTitle: "Result",
-        tResP1: "The experiment confirmed the validity of the Kinetic Molecular Theory and determined the number of particles in one mole of matter:",
-        tResP2: "Using this fundamental constant, physicists calculated the true absolute masses of individual molecules (measures of inertia) in kilograms:",
-
-        tFormTitle: "Formula",
-        tFormIntro: "The standard 10th grade physics formula to calculate the absolute mass of a single molecule is defined by the ratio of molar mass to Avogadro's constant:",
-        tFormAlt: "Relation via total mass of sample: m₀ = m / N, where m is total gas mass and N is the total count of molecules in that volume.",
-
-        tLogicTitle: "The Logic",
-        tLogicP1: "An individual molecule cannot be weighed on mechanical scales. The limitation lies in scale: its gravitational weight is vanishingly small (~10⁻²⁵ N), entirely dominated by thermal agitation (kT).",
-        tStep1: "Physicists and chemists readily weigh 1 mole of a substance on laboratory scales: e.g. exactly 32 grams for oxygen gas O₂.",
-        tStep2: "Perrin's experiment provided the exact particle counter: exactly 6.022 × 10²³ molecules exist in one mole of any pure substance.",
-        tStep3: "Dividing the known mass of one mole by this count yielded the true absolute mass of a single, invisible molecule.",
-        tLogicP2: "Thus, Avogadro's constant N<sub>A</sub> served as the universal conversion bridge connecting macroscopic instruments to the microscopic molecular realm.",
-
-        tSim1Title: "Experiment: Pressure & Temperature",
-        tLblTemp: "Temperature:",
-        tLblVol: "Chamber Volume (V):",
-        tSimHeading: "Kinetic Telemetry",
-        tLblSpeed: "Root-Mean-Square Speed:",
-        tLblEnergy: "Kinetic Energy (E<sub>k</sub>):",
-        tLblHits: "Wall Collision Rate:",
-        tSimNote: "Gas pressure is generated by continuous collisions of billions of particles against the chamber walls. Heating increases particle speeds and impulse forces.",
-        btnPause: "Pause",
-        btnPlay: "Run",
-
-        tScaleTitle: "Experiment: Molecular Weight & Mass",
-        tLblSingle: "Single Molecule Mass (m₀ = M / N<sub>A</sub>)",
-        tLblWeight: "Molecule Rest Weight (P = m₀·g)",
-        tScaleDesc: "The weight of a single molecule is negligible: gravity is trillions of times weaker than thermal impact impulses, which prevents gases from settling onto the floor.",
-
-        footerText1: "Interactive website for Physics Project by Group #4.",
-        footerText2: "Project participants:"
+        header: "How Was the Mass of Bodies Found?",
+        c1_badge: "Criterion",
+        c1_title: "Author: Amedeo Avogadro and Jean Perrin",
+        c1_p1: "<strong>Amedeo Avogadro (1811)</strong> — Italian scientist who formulated the hypothesis that equal volumes of gases at identical temperature and pressure hold identical numbers of molecules.",
+        c1_p2: "<strong>Jean Baptiste Perrin (1908)</strong> — verified the law via Brownian motion and precisely measured Avogadro's constant, earning the 1926 Nobel Prize in Physics.",
+        c2_badge: "Criterion",
+        c2_title: "Experiment Essence: Sedimentation Equilibrium",
+        c2_p1: "Perrin suspended uniform gamboge micro-spheres in a 100 μm glass cell, observing the balance between gravitational settling and upward thermal molecular bombardment.",
+        c3_badge: "Criterion",
+        c3_title: "Result: Experimental Avogadro Number",
+        c4_badge: "Criterion",
+        c4_title: "Formula: Mass of a Single Molecule",
+        c4_v1: "Mass of one molecule — the true physical measure of its inertia.",
+        c4_v2: "Molar mass — mass of 1 mole of substance from the periodic table.",
+        c4_v3: "Avogadro's constant — the bridge connecting macroscopic moles with individual particles.",
+        c5_badge: "Criterion",
+        c5_title: "What is the Logic: Weighing the Unweighable?",
+        sim1_title: "Pressure, Temperature and Avogadro's Law",
+        footer_title: "Interactive website for Physics Group #4 project.",
+        footer_members: "Project members: Bolatkhan Mansur, Member2, Member3, Member4"
       }
     };
-
-    let curLang = 'ru';
 
     function setLang(lang) {
-      if (!I18N[lang]) return;
-      curLang = lang;
+      document.getElementById('header-title').innerText = i18n[lang].header;
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (i18n[lang][key]) el.innerHTML = i18n[lang][key];
+      });
 
       ['kz', 'ru', 'en'].forEach(l => {
-        const btn = document.getElementById(`btn-${l}`);
+        const btn = document.getElementById('btn-' + l);
         if (l === lang) {
-          btn.className = "px-3.5 py-1 rounded-full bg-ink text-milk font-semibold transition-colors duration-200";
+          btn.className = "px-2.5 py-1 text-xs font-semibold uppercase tracking-wider bg-[#171717] text-[#FDFBF7]";
         } else {
-          btn.className = "px-3.5 py-1 rounded-full text-dim hover:text-ink transition-colors duration-200";
+          btn.className = "px-2.5 py-1 text-xs font-medium uppercase tracking-wider text-[#6B6359] hover:text-[#171717]";
         }
       });
-
-      const d = I18N[lang];
-      document.getElementById('headerTitle').textContent = d.headerTitle;
-
-      document.getElementById('t-author-title').textContent = d.tAuthorTitle;
-      document.getElementById('t-author-quote').textContent = d.tAuthorQuote;
-      document.getElementById('t-author-p1').innerHTML = d.tAuthorP1;
-      document.getElementById('t-author-p2').innerHTML = d.tAuthorP2;
-
-      document.getElementById('t-exp-title').textContent = d.tExpTitle;
-      document.getElementById('t-exp-p1').innerHTML = d.tExpP1;
-      document.getElementById('t-exp-p2').textContent = d.tExpP2;
-      document.getElementById('t-exp-p3').textContent = d.tExpP3;
-
-      document.getElementById('t-res-title').textContent = d.tResTitle;
-      document.getElementById('t-res-p1').textContent = d.tResP1;
-      document.getElementById('t-res-p2').textContent = d.tResP2;
-
-      document.getElementById('t-form-title').textContent = d.tFormTitle;
-      document.getElementById('t-form-intro').textContent = d.tFormIntro;
-      document.getElementById('t-form-alt').textContent = d.tFormAlt;
-
-      document.getElementById('t-logic-title').textContent = d.tLogicTitle;
-      document.getElementById('t-logic-p1').textContent = d.tLogicP1;
-      document.getElementById('t-step-1').textContent = d.tStep1;
-      document.getElementById('t-step-2').textContent = d.tStep2;
-      document.getElementById('t-step-3').textContent = d.tStep3;
-      document.getElementById('t-logic-p2').innerHTML = d.tLogicP2;
-
-      document.getElementById('t-sim1-title').textContent = d.tSim1Title;
-      document.getElementById('t-lbl-temp').textContent = d.tLblTemp;
-      document.getElementById('t-lbl-vol').textContent = d.tLblVol;
-      document.getElementById('t-sim-heading').textContent = d.tSimHeading;
-      document.getElementById('t-lbl-speed').textContent = d.tLblSpeed;
-      document.getElementById('t-lbl-energy').innerHTML = d.tLblEnergy;
-      document.getElementById('t-lbl-hits').textContent = d.tLblHits;
-      document.getElementById('t-sim-note').textContent = d.tSimNote;
-      document.getElementById('btnToggleSim').textContent = simActive ? d.btnPause : d.btnPlay;
-
-      document.getElementById('t-scale-title').textContent = d.tScaleTitle;
-      document.getElementById('t-lbl-single').innerHTML = d.tLblSingle;
-      document.getElementById('t-lbl-weight').innerHTML = d.tLblWeight;
-      document.getElementById('t-scale-desc').textContent = d.tScaleDesc;
-
-      document.getElementById('footerText1').textContent = d.footerText1;
-      document.getElementById('footerText2').textContent = d.footerText2;
-
-      updateGasStats();
-      renderScales();
     }
 
-    /* ФИЗИКА ГАЗА */
-    const NA_CONST = 6.02214076e23;
-    const KB_CONST = 1.380649e-23;
-    const R_CONST = 8.31446;
-    const G_ACC = 9.80665;
-
-    const GASES = {
-      H2:  { M: 2.016,  radius: 3.0 },
-      He:  { M: 4.0026, radius: 3.2 },
-      H2O: { M: 18.015, radius: 4.2 },
-      N2:  { M: 28.013, radius: 4.4 },
-      O2:  { M: 31.999, radius: 4.6 },
-      CO2: { M: 44.01,  radius: 5.2 }
-    };
-
-    let curGas = 'N2';
-    let curTemp = 293;
-    let curVol = 1.0;
-    let simActive = true;
-
+    // Canvas симуляция газа
     const canvas = document.getElementById('gasCanvas');
     const ctx = canvas.getContext('2d');
-    let cW = 0, cH = 0;
     let particles = [];
+    const NUM_PARTICLES = 120;
 
     function resizeCanvas() {
-      const rect = canvas.getBoundingClientRect();
-      const dpr = window.devicePixelRatio || 1;
-      canvas.width = rect.width * dpr;
-      canvas.height = rect.height * dpr;
-      cW = rect.width;
-      cH = rect.height;
-      ctx.resetTransform?.();
-      ctx.scale(dpr, dpr);
+      canvas.width = canvas.parentElement.clientWidth;
+      canvas.height = 320;
     }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
 
-    class Particle {
-      constructor() {
-        this.reset();
-      }
-      reset() {
-        const boundX = cW * curVol;
-        this.x = 10 + Math.random() * (Math.max(boundX - 20, 20));
-        this.y = 10 + Math.random() * (cH - 20);
-        this.setSpeed();
-      }
-      setSpeed() {
-        const m = GASES[curGas].M * 1e-3;
-        const v = Math.sqrt((3 * R_CONST * curTemp) / m) * 0.08;
-        const ang = Math.random() * Math.PI * 2;
-        this.vx = Math.cos(ang) * v;
-        this.vy = Math.sin(ang) * v;
-      }
-      update(dt) {
-        this.x += this.vx * dt;
-        this.y += this.vy * dt;
-        const r = GASES[curGas].radius;
-        const boundX = cW * curVol;
+    const sliderT = document.getElementById('slider-t');
+    const sliderV = document.getElementById('slider-v');
+    const gasSelect = document.getElementById('gas-select');
+    const readoutP = document.getElementById('readout-p');
+    const readoutV = document.getElementById('readout-v');
+    const labelT = document.getElementById('label-t');
+    const labelV = document.getElementById('label-v');
 
-        if (this.x - r < 0) { this.x = r; this.vx = Math.abs(this.vx); }
-        else if (this.x + r > boundX) { this.x = boundX - r; this.vx = -Math.abs(this.vx); }
+    const gasMasses = { H2: 2, He: 4, N2: 28, O2: 32, CO2: 44 };
 
-        if (this.y - r < 0) { this.y = r; this.vy = Math.abs(this.vy); }
-        else if (this.y + r > cH) { this.y = cH - r; this.vy = -Math.abs(this.vy); }
-      }
-      draw(c) {
-        c.beginPath();
-        c.arc(this.x, this.y, GASES[curGas].radius, 0, Math.PI * 2);
-        c.fillStyle = '#171717';
-        c.fill();
-      }
-    }
-
-    function initGasSim() {
-      particles = [];
-      for (let i = 0; i < 85; i++) {
-        particles.push(new Particle());
-      }
-    }
-
-    function updateGasStats() {
-      const m = GASES[curGas].M * 1e-3;
-      const vRms = Math.round(Math.sqrt((3 * R_CONST * curTemp) / m));
-      const ek = (1.5 * KB_CONST * curTemp).toExponential(2).split('e');
-      const press = ((curTemp / 293) * (1 / curVol)).toFixed(2);
-
-      document.getElementById('valPressure').textContent = press;
-      document.getElementById('valSpeed').textContent = `${vRms} м/с`;
-      document.getElementById('valEnergy').innerHTML = `${ek[0]} × 10<sup>${ek[1]}</sup> Дж`;
-      document.getElementById('valHits').textContent = `${Math.round(press * 100)}% нормы`;
-    }
-
-    let lastTime = performance.now();
-    function animateSim(now) {
-      const dt = Math.min((now - lastTime) / 16.6, 2.0);
-      lastTime = now;
-
-      if (simActive && cW > 0 && cH > 0) {
-        ctx.fillStyle = '#FAF8F5';
-        ctx.fillRect(0, 0, cW, cH);
-
-        const pistonX = cW * curVol;
-
-        // Линия поршня
-        ctx.strokeStyle = '#171717';
-        ctx.lineWidth = 3;
-        ctx.beginPath();
-        ctx.moveTo(pistonX, 0);
-        ctx.lineTo(pistonX, cH);
-        ctx.stroke();
-
-        // Неактивная зона за поршнем
-        ctx.fillStyle = '#EBE4D6';
-        ctx.fillRect(pistonX + 3, 0, cW - pistonX, cH);
-
-        // Частицы
-        for (let i = 0; i < particles.length; i++) {
-          particles[i].update(dt);
-          particles[i].draw(ctx);
-        }
-      }
-
-      requestAnimationFrame(animateSim);
-    }
-
-    /* ВЕСЫ И МАССА МОЛЕКУЛ */
-    let pickedGas = 'O2';
-
-    function pickGas(id) {
-      pickedGas = id;
-      document.querySelectorAll('.g-btn').forEach(btn => {
-        if (btn.dataset.id === id) {
-          btn.className = "g-btn px-4 py-2 rounded-2xl border border-ink bg-ink text-milk text-xs mono-num font-semibold transition";
-        } else {
-          btn.className = "g-btn px-4 py-2 rounded-2xl border border-line bg-cream text-xs mono-num transition";
-        }
+    for (let i = 0; i < NUM_PARTICLES; i++) {
+      particles.push({
+        x: Math.random() * (canvas.width * 0.9),
+        y: Math.random() * 300 + 10,
+        vx: (Math.random() - 0.5) * 2,
+        vy: (Math.random() - 0.5) * 2
       });
-      renderScales();
     }
 
-    function renderScales() {
-      const gas = GASES[pickedGas];
-      const m0 = (gas.M * 1e-3) / NA_CONST;
-      const sci = m0.toExponential(2).split('e');
-      const weightN = (m0 * G_ACC).toExponential(2).split('e');
+    function renderGas() {
+      ctx.fillStyle = '#171717';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      document.getElementById('boxSingleKg').innerHTML = `${sci[0]} × 10<sup>${sci[1]}</sup> кг`;
-      document.getElementById('boxSingleAmu').textContent = `${gas.M.toFixed(3)} а.е.м.`;
-      document.getElementById('boxWeightN').innerHTML = `${weightN[0]} × 10<sup>${weightN[1]}</sup> Н`;
-      document.getElementById('t-lbl-mole').textContent = `Молярная масса: ${gas.M.toFixed(3)} г/моль`;
-      
-      const calcLine = document.getElementById('boxCalcLine');
-      calcLine.innerHTML = `<span>Расчет:</span><span>${(gas.M * 1e-3).toFixed(5)} кг / 6.022 × 10²³</span>`;
-    }
+      const T = parseFloat(sliderT.value);
+      const V_pct = parseFloat(sliderV.value) / 100;
+      const gasM = gasMasses[gasSelect.value];
+      const maxW = canvas.width * V_pct;
 
-    /* СЛУШАТЕЛИ */
-    window.addEventListener('resize', () => {
-      resizeCanvas();
-    });
+      // Поршень (без скруглений)
+      ctx.fillStyle = '#D8CEBE';
+      ctx.fillRect(maxW, 0, 8, canvas.height);
 
-    document.getElementById('gasSelect').addEventListener('change', (e) => {
-      curGas = e.target.value;
-      particles.forEach(p => p.setSpeed());
-      updateGasStats();
-    });
+      const baseSpeed = Math.sqrt(T / gasM) * 0.45;
+      const realSpeed = Math.round(Math.sqrt((3 * 8.314 * T) / (gasM * 0.001)));
+      const pressureKpa = ((NUM_PARTICLES * 1.38 * (T / 300)) / (V_pct * 1.5)).toFixed(1);
 
-    document.getElementById('btnToggleSim').addEventListener('click', function() {
-      simActive = !simActive;
-      const d = I18N[curLang];
-      this.textContent = simActive ? d.btnPause : d.btnPlay;
-    });
+      labelT.innerText = T + ' К';
+      labelV.innerText = V_pct.toFixed(1) + ' л';
+      readoutP.innerText = pressureKpa + ' кПа';
+      readoutV.innerText = realSpeed + ' м/с';
 
-    document.getElementById('sliderT').addEventListener('input', (e) => {
-      curTemp = parseFloat(e.target.value);
-      document.getElementById('dispTemp').textContent = `${curTemp} K`;
-      particles.forEach(p => p.setSpeed());
-      updateGasStats();
-    });
-
-    document.getElementById('sliderV').addEventListener('input', (e) => {
-      curVol = parseFloat(e.target.value);
-      document.getElementById('dispVol').textContent = `${curVol.toFixed(2)} V₀`;
-      const boundX = cW * curVol;
+      ctx.fillStyle = '#FDFBF7';
       particles.forEach(p => {
-        if (p.x > boundX - 8) p.x = boundX - 12;
-      });
-      updateGasStats();
-    });
+        p.x += p.vx * baseSpeed;
+        p.y += p.vy * baseSpeed;
 
-    window.onload = function() {
-      resizeCanvas();
-      initGasSim();
-      setLang('ru');
-      pickGas('O2');
-      requestAnimationFrame(animateSim);
-    };
+        if (p.x <= 3) { p.x = 3; p.vx *= -1; }
+        if (p.x >= maxW - 3) { p.x = maxW - 3; p.vx *= -1; }
+        if (p.y <= 3) { p.y = 3; p.vy *= -1; }
+        if (p.y >= canvas.height - 3) { p.y = canvas.height - 3; p.vy *= -1; }
+
+        ctx.fillRect(p.x - 2, p.y - 2, 4, 4);
+      });
+
+      requestAnimationFrame(renderGas);
+    }
+    renderGas();
   </script>
 </body>
 </html>
